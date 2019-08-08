@@ -5,10 +5,10 @@ pipeline{
       maven 'maven 3.6.1'
     }
     stages{
-        when{
+        stage("build"){
+            when{
                changeset "**/result/**"
         }
-        stage("build"){
             steps{
                 echo "Building worker app....."
                 dir("worker"){
