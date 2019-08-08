@@ -17,7 +17,7 @@ pipeline{
             }
         }
         stage("test"){
-            when {
+            when{
                changeset "**/result/**"
             }
             steps{
@@ -28,7 +28,7 @@ pipeline{
             }
         }
         stage("package"){
-            when {
+            when{
                changeset "**/result/**"
                branch 'master'
             }
