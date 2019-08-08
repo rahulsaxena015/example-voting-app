@@ -1,93 +1,41 @@
 pipeline{
-<<<<<<< HEAD
-agent{
-docker{
-image 'maven:3.6.1-jdk-8-slim'
-args '-v $HOME/.m2:/root/.m2'
-}
-}
-stages{
-stage('build'){
-steps{
-echo 'building worker app'
-dir('worker'){
-sh 'mvn compile'
-}
-}
-}
-stage('test'){
-steps{
-echo 'running unit tests on worker app'
-dir('worker'){
-sh 'mvn clean test'
-}
-}
-}
-stage('package'){
-steps{
-echo 'packaging worker app into a jarfile'
-dir('worker'){
-sh 'mvn package -DskipTests'
-archiveArtifacts artifacts: '**/target/*.jar', fingerprint:
-true
-}
-}
-}
-}
-post{
-always{
-echo 'the job is complete'
-}
-}
-=======
-  agent{
-       docker {image 'maven:3.6.1-jdk-8-slim'}
-    } 
-    tools{
-      maven 'maven 3.6.1'
-    }
-    stages{
-        stage("build"){
-            when{
-               changeset "**/result/**"
-        }
-            steps{
-                echo "Building worker app....."
-                dir("worker"){
-                  sh 'mvn compile'
-               }
-            }
-        }
-        stage("test"){
-            when{
-               changeset "**/result/**"
-            }
-            steps{
-                echo "Testing worker app....."
-                dir("worker"){
-                  sh 'mvn clean test'
-              }
-            }
-        }
-        stage("package"){
-            when{
-               changeset "**/result/**"
-               branch 'master'
-            }
-            steps{
-                echo "Packaging worker app....."
-                dir("worker"){
-                  sh 'mvn package -DskipTests'
-                  archiveArtifacts artifacts: '**/target/*.jar'
-              }
-            }
-        }
-    }
-    
-    post{
-        always{
-            echo "This pipeline is completed...."
-        }
-    }
->>>>>>> 500b57858147f0df22d59ce35cc8c71556592e11
+	agent{
+		docker{
+			image 'maven:3.6.1-jdk-8-slim'
+			args '-v $HOME/.m2:/root/.m2'
+		}
+	}
+	stages{
+		stage('build'){
+			steps{
+				echo 'building worker app'
+				dir('worker'){
+					sh 'mvn compile'
+				}
+			}
+		}
+		stage('test'){
+			steps{
+				echo 'running unit tests on worker app'
+				dir('worker'){
+					sh 'mvn clean test'
+				}
+			}
+		}
+		stage('package'){
+			steps{
+				echo 'packaging worker app into a jarfile'
+				dir('worker'){
+					sh 'mvn package -DskipTests'
+					archiveArtifacts artifacts: '**/target/*.jar', fingerprint:
+					true
+				}
+			}
+		}
+	}
+	post{
+		always{
+			echo 'the job is complete'
+		}
+	}
 }
