@@ -1,11 +1,16 @@
 pipeline{
-    agent any
+    agent{
+       docker {image 'node:lts-slim'}
+    }
     
     tools{
       nodejs 'NodeJS 12.8.0'
     }
     stages{
         stage("build"){
+            when {
+               changeset "**/result/**"
+            }
             steps{
                 echo "Building worker app....."
                 dir("result"){
@@ -14,8 +19,13 @@ pipeline{
             }
         }
         stage("test"){
+<<<<<<< HEAD
             when{
                 changeset "**/result/**"
+=======
+            when {
+               changeset "**/result/**"
+>>>>>>> 500b57858147f0df22d59ce35cc8c71556592e11
             }
             steps{
                 echo "Testing worker app....."
