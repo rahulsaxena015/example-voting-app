@@ -1,5 +1,7 @@
 pipeline{
-    agent any
+    agent{
+       docker {image 'maven:maven 3.6.1'}
+    }
     
     tools{
       nodejs 'NodeJS 12.8.0'
