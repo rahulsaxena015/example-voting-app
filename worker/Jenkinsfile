@@ -5,6 +5,9 @@ pipeline{
       maven 'maven 3.6.1'
     }
     stages{
+        when {
+               changeset "**/result/**"
+            }
         stage("build"){
             steps{
                 echo "Building worker app....."
@@ -14,6 +17,9 @@ pipeline{
             }
         }
         stage("test"){
+            when {
+               changeset "**/result/**"
+            }
             steps{
                 echo "Testing worker app....."
                 dir("worker"){
@@ -22,6 +28,10 @@ pipeline{
             }
         }
         stage("package"){
+            when {
+               changeset "**/result/**"
+               branch 'master'
+            }
             steps{
                 echo "Packaging worker app....."
                 dir("worker"){
